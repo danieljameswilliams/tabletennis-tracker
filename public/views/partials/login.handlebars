@@ -1,0 +1,12 @@
+<fieldset>
+  <legend>Login</legend>
+  <form action="/services/user/login" method="POST">
+    <input type="hidden" name="facebookid" id="facebookid">
+
+    <input type="text" name="username" placeholder="Brugernavn">
+    <input type="password" name="password" placeholder="Kodeord">
+
+    <button type="submit" class="js-login-btn manual-login-btn">Login</button>
+    <button type="submit" class="js-login-btn facebook-login-btn">Login med Facebook</button>
+  </form>
+</fieldset>
