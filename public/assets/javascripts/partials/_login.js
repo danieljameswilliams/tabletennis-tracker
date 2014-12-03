@@ -34,7 +34,6 @@ App.Login = (function() {
        .done( _prepareAuthenticationWithRemote );
     }
     else {
-      console.log( 'Manual Button Clicked' );
       _prepareAuthenticationWithRemote( $this );
     }
   }
@@ -71,8 +70,8 @@ App.Login = (function() {
         alert('Der findes ingen bruger med disse oplysninger.');
       }
       else {
+        App.Parse.loginError( data );
         alert('Der skete en fejl, supporten er underrettet.');
-        //TODO: Add Email Support Mail
       }
     });
     console.log('Checker dine data...');
