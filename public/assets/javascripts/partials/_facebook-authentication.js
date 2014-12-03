@@ -4,7 +4,10 @@ var App = App || {};
 App.Authentication.Facebook = (function() {
   'use strict';
 
-  var dom = {};
+  var dom = {},
+      selectors = {
+        facebookID : '.js-facebook-id'
+      };
 
   function initialize() {
     $.ajaxSetup({ cache: true });
@@ -17,16 +20,18 @@ App.Authentication.Facebook = (function() {
     });
   }
 
-  function getLoginStatus() {
+  function getLoginStatus( paramCallback ) {
+    var callback = paramCallback || loginHandler;
     console.log( 'Facebook Login Status' );
 
-    FB.getLoginStatus( loginHandler );
+    FB.getLoginStatus( callback );
   }
 
   function loginHandler( response ) {
     console.log( 'Facebook Login Handler' );
     if( response.status == 'connected' ) {
-      console.log( response );
+      $( selectors.facebookID ).val( response.authResponse.userID );
+      console.log( 'ID Added', response.authResponse.userID );
     }
     else {
       FB.login(function( response ) {
