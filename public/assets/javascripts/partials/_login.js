@@ -15,6 +15,7 @@ App.Login = (function() {
 
   function _setupDOM() {
     dom.$loginSubmit = $('.js-login-btn');
+    dom.$loginForm = $('.js-login-form');
   }
 
   function _addEventListeners() {
@@ -40,18 +41,17 @@ App.Login = (function() {
 
   function _prepareAuthenticationWithRemote( $this ) {
     var $this = $this || $(this);
-    var parentForm = $this.parents('form');
-    var loginData = parentForm.serializeArray();
+    var loginData = dom.$loginForm.serializeArray();
 
     console.log( 'Authenticating' );
 
-    _authenticateWithRemote( loginData );
+    _authenticateWithRemote( loginData, parentForm );
   }
 
-  function _authenticateWithRemote( loginData ) {
+  function _authenticateWithRemote( loginData, parentForm ) {
     $.ajax({
       type: 'POST',
-      url: '/services/user/login',
+      url: dom.$loginForm.attr('action'),
       data: loginData
     })
     .done(function( response ) {

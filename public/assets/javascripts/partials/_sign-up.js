@@ -15,6 +15,7 @@ App.SignUp = (function() {
 
   function _setupDOM() {
     dom.$signupSubmit = $('.js-create-btn');
+    dom.$signupForm = $('.js-create-form');
   }
 
   function _addEventListeners() {
@@ -31,7 +32,9 @@ App.SignUp = (function() {
       console.log( 'Facebook Button Clicked' );
 
       $.when( App.Authentication.Facebook.getLoginStatus() )
-       .done( _prepareAuthenticationWithRemote );
+      .done( function() {
+        _prepareAuthenticationWithRemote( $this );
+      } );
     }
     else {
       _prepareAuthenticationWithRemote( $this );
@@ -40,8 +43,15 @@ App.SignUp = (function() {
 
   function _prepareAuthenticationWithRemote( $this ) {
     var $this = $this || $(this);
-    var parentForm = $this.parents('form');
-    var loginData = parentForm.serializeArray();
+
+    if( $this.hasClass( selectors.facebookLoginBtn ) ) {
+      FB.api('/me', { fields: 'name' }, function( response ) {
+        $('input[name=\'name\']', dom.$signupForm).val( response.name );
+        $('input[name=\'username\']', dom.$signupForm).val( response.id );
+      });
+    }
+
+    var loginData = dom.$signupForm.serializeArray();
 
     _authenticateWithRemote( loginData );
   }
@@ -49,7 +59,7 @@ App.SignUp = (function() {
   function _authenticateWithRemote( loginData ) {
     $.ajax({
       type: 'POST',
-      url: '/services/user/login',
+      url: dom.$signupForm.attr('action'),
       data: loginData
     })
     .done(function( response ) {
@@ -68,8 +78,8 @@ App.SignUp = (function() {
         alert('Der findes ingen bruger med disse oplysninger.');
       }
       else {
+        App.Parse.loginError( data );
         alert('Der skete en fejl, supporten er underrettet.');
-        //TODO: Add Email Support Mail
       }
     });
     console.log('Checker dine data...');
