@@ -45,10 +45,10 @@ App.Login = (function() {
 
     console.log( 'Authenticating' );
 
-    _authenticateWithRemote( loginData, parentForm );
+    _authenticateWithRemote( loginData );
   }
 
-  function _authenticateWithRemote( loginData, parentForm ) {
+  function _authenticateWithRemote( loginData ) {
     $.ajax({
       type: 'POST',
       url: dom.$loginForm.attr('action'),
