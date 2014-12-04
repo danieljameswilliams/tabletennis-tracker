@@ -1,0 +1,11 @@
+<fieldset>
+  <legend>Logout</legend>
+  <form action="/api/user/logout" method="POST" class="js-logout-form">
+    <input type="hidden" name="facebookid" id="facebookid" class="js-facebook-id">
+    <input type="hidden" name="accesstoken" id="accesstoken" class="js-accesstoken">
+
+    <input type="text" name="username" id="username" placeholder="Brugernavn" disabled>
+
+    <button type="submit" class="js-login-btn manual-login-btn">Log ud</button>
+  </form>
+</fieldset>

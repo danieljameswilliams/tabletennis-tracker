@@ -1,0 +1,14 @@
+<fieldset>
+  <legend>Opret en bruger</legend>
+  <form action="/api/user/create" method="POST" class="js-user-create-form">
+    <input type="hidden" name="facebookid" id="facebookid" class="js-facebook-id">
+    <input type="hidden" name="accesstoken" id="accesstoken" class="js-accesstoken">
+
+    <input type="text" name="name" placeholder="Navn">
+    <input type="text" name="username" placeholder="Brugernavn">
+    <input type="password" name="password" placeholder="Kodeord">
+
+    <button type="submit" class="js-user-create-btn user-create__btn--manual">Opret</button>
+    <button type="submit" class="js-user-create-btn user-create__btn--facebook">Opret med Facebook</button>
+  </form>
+</fieldset>

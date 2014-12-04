@@ -1,11 +1,11 @@
 var App = App || {};
 
-App.SignUp = (function() {
+App.Login = (function() {
   'use strict';
 
   var dom = {},
       selectors = {
-        facebookLoginBtn : 'facebook-create-btn'
+        facebookLoginBtn : 'facebook-login-btn'
       };
 
   function initialize() {
@@ -14,27 +14,22 @@ App.SignUp = (function() {
   }
 
   function _setupDOM() {
-    dom.$signupSubmit = $('.js-create-btn');
-    dom.$signupForm = $('.js-create-form');
+    dom.$loginSubmit = $('.js-login-btn');
+    dom.$loginForm = $('.js-login-form');
   }
 
   function _addEventListeners() {
-    dom.$signupSubmit.on('click', _onSignupSubmit );
+    dom.$loginSubmit.on('click', _onLoginSubmit );
   }
 
-  function _onSignupSubmit() {
+  function _onLoginSubmit() {
     event.preventDefault();
-
-    console.log( 'Button Clicked' );
 
     var $this = $(this);
     if( $this.hasClass( selectors.facebookLoginBtn ) ) {
-      console.log( 'Facebook Button Clicked' );
 
       $.when( App.Authentication.Facebook.getLoginStatus() )
-      .done( function() {
-        _prepareAuthenticationWithRemote( $this );
-      } );
+       .done( _prepareAuthenticationWithRemote );
     }
     else {
       _prepareAuthenticationWithRemote( $this );
@@ -43,15 +38,7 @@ App.SignUp = (function() {
 
   function _prepareAuthenticationWithRemote( $this ) {
     var $this = $this || $(this);
-
-    if( $this.hasClass( selectors.facebookLoginBtn ) ) {
-      FB.api('/me', { fields: 'name' }, function( response ) {
-        $('input[name=\'name\']', dom.$signupForm).val( response.name );
-        $('input[name=\'username\']', dom.$signupForm).val( response.id );
-      });
-    }
-
-    var loginData = dom.$signupForm.serializeArray();
+    var loginData = dom.$loginForm.serializeArray();
 
     _authenticateWithRemote( loginData );
   }
@@ -59,7 +46,7 @@ App.SignUp = (function() {
   function _authenticateWithRemote( loginData ) {
     $.ajax({
       type: 'POST',
-      url: dom.$signupForm.attr('action'),
+      url: dom.$loginForm.attr('action'),
       data: loginData
     })
     .done(function( response ) {
@@ -72,7 +59,6 @@ App.SignUp = (function() {
        */
       if(data.status == 'pending' || data.status == 'active') {
         _loginSuccess();
-        console.log('Logger dig ind...');
       }
       else if (data.status == 'incorrect') {
         alert('Der findes ingen bruger med disse oplysninger.');
@@ -82,7 +68,6 @@ App.SignUp = (function() {
         alert('Der skete en fejl, supporten er underrettet.');
       }
     });
-    console.log('Checker dine data...');
   }
 
   /**

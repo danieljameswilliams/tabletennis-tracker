@@ -6,7 +6,8 @@ App.Authentication.Facebook = (function() {
 
   var dom = {},
       selectors = {
-        facebookID : '.js-facebook-id'
+        facebookID : '.js-facebook-id',
+        accessToken: '.js-accesstoken'
       };
 
   function initialize() {
@@ -22,16 +23,14 @@ App.Authentication.Facebook = (function() {
 
   function getLoginStatus( paramCallback ) {
     var callback = paramCallback || loginHandler;
-    console.log( 'Facebook Login Status' );
 
     FB.getLoginStatus( callback );
   }
 
   function loginHandler( response ) {
-    console.log( 'Facebook Login Handler' );
     if( response.status == 'connected' ) {
       $( selectors.facebookID ).val( response.authResponse.userID );
-      console.log( 'ID Added', response.authResponse.userID );
+      $( selectors.accessToken ).val( response.authResponse.accessToken );
     }
     else {
       FB.login(function( response ) {
