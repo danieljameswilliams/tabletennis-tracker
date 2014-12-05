@@ -14,15 +14,15 @@ App.SignUp = (function() {
   }
 
   function _setupDOM() {
-    dom.$signupSubmit = $('.js-user-create-btn');
-    dom.$signupForm = $('.js-user-create-form');
+    dom.$submit = $('.js-user-create-btn');
+    dom.$form = $('.js-user-create-form');
   }
 
   function _addEventListeners() {
-    dom.$signupSubmit.on('click', _onSignupSubmit );
+    dom.$submit.on('click', _onSubmitClicked );
   }
 
-  function _onSignupSubmit() {
+  function _onSubmitClicked() {
     event.preventDefault();
 
     var $this = $(this);
@@ -42,12 +42,12 @@ App.SignUp = (function() {
 
     if( $this.hasClass( selectors.facebookLoginBtn ) ) {
       FB.api('/me', { fields: 'name' }, function( response ) {
-        $('input[name=\'name\']', dom.$signupForm).val( response.name );
-        $('input[name=\'username\']', dom.$signupForm).val( response.id );
+        $('input[name=\'name\']', dom.$form).val( response.name );
+        $('input[name=\'username\']', dom.$form).val( response.id );
       });
     }
 
-    var loginData = dom.$signupForm.serializeArray();
+    var loginData = dom.$form.serializeArray();
 
     _authenticateWithRemote( loginData );
   }
@@ -55,7 +55,7 @@ App.SignUp = (function() {
   function _authenticateWithRemote( loginData ) {
     $.ajax({
       type: 'POST',
-      url: dom.$signupForm.attr('action'),
+      url: dom.$form.attr('action'),
       data: loginData
     })
     .done(function( response ) {
@@ -77,14 +77,6 @@ App.SignUp = (function() {
         alert('Der skete en fejl, supporten er underrettet.');
       }
     });
-  }
-
-  /**
-   * Changes the UI to act logged in and personal.
-   */
-  function _loginSuccess() {
-    dom.$loginInput.val(data.Id);
-    dom.$loginForm.html('Du er logget ind som: ' + data.Name);
   }
 
   ////////////////

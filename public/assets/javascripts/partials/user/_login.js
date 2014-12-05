@@ -14,12 +14,12 @@ App.Login = (function() {
   }
 
   function _setupDOM() {
-    dom.$loginSubmit = $('.js-login-btn');
-    dom.$loginForm = $('.js-login-form');
+    dom.$submit = $('.js-login-btn');
+    dom.$form = $('.js-login-form');
   }
 
   function _addEventListeners() {
-    dom.$loginSubmit.on('click', _onLoginSubmit );
+    dom.$submit.on('click', _onLoginSubmit );
   }
 
   function _onLoginSubmit() {
@@ -38,7 +38,7 @@ App.Login = (function() {
 
   function _prepareAuthenticationWithRemote( $this ) {
     var $this = $this || $(this);
-    var loginData = dom.$loginForm.serializeArray();
+    var loginData = dom.$form.serializeArray();
 
     _authenticateWithRemote( loginData );
   }
@@ -46,7 +46,7 @@ App.Login = (function() {
   function _authenticateWithRemote( loginData ) {
     $.ajax({
       type: 'POST',
-      url: dom.$loginForm.attr('action'),
+      url: dom.$form.attr('action'),
       data: loginData
     })
     .done(function( response ) {
@@ -74,8 +74,7 @@ App.Login = (function() {
    * Changes the UI to act logged in and personal.
    */
   function _loginSuccess() {
-    dom.$loginInput.val(data.Id);
-    dom.$loginForm.html('Du er logget ind som: ' + data.Name);
+    dom.$form.html('Du er logget ind som: ' + data.Name);
   }
 
   ////////////////

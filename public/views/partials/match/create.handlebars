@@ -1,15 +1,8 @@
 <fieldset>
   <legend>Submit Match</legend>
   <form action="/api/match/create" method="POST" class="js-match-create-form">
-
-    <div style="width: 5.3%;float:left;">
-      <input type="text" name="challenger" placeholder="Udfordre's Navn"><br>
-      {{> match/player-preview}}
-    </div>
-    <div style="width: 5.3%;float:left;">
-      <input type="text" name="challenged" placeholder="Udfordret's Navn"><br>
-      {{> match/player-preview}}
-    </div>
+    <input type="text" name="challenger" placeholder="Udfordre's Brugernavn">
+    <input type="text" name="challenged" placeholder="Udfordret's Brugernavn">
 
     <button type="submit" class="js-match-create-btn">Opret kamp</button>
   </form>
