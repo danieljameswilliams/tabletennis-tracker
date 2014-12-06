@@ -64,7 +64,7 @@ App.Login = (function() {
         alert('Der findes ingen bruger med disse oplysninger.');
       }
       else {
-        App.Parse.loginError( data );
+        App.Parse.loginError( data.status );
         alert('Der skete en fejl, supporten er underrettet.');
       }
     });

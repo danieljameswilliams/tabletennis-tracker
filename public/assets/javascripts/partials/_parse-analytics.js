@@ -12,12 +12,12 @@ App.Parse = (function() {
     });
   }
 
-  function loginError( data ) {
+  function loginError( message ) {
     var errorInfo = {
-      status: data.status.toString()
+      'message' : message.toString()
     };
 
-    Parse.Analytics.track('login error', errorInfo)
+    Parse.Analytics.track('error', errorInfo)
   }
 
   ////////////////

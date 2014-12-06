@@ -64,19 +64,26 @@ App.SignUp = (function() {
       /**
        * We are now waiting for some response from the server,
        * Which can return 3 types of string status:
-       * [pending], [active] and [incorrect].
+       * [pending], [active] and [reserved].
        */
       if(data.status == 'pending' || data.status == 'active') {
         _loginSuccess();
       }
-      else if (data.status == 'incorrect') {
-        alert('Der findes ingen bruger med disse oplysninger.');
+      else if (data.status == 'reserved') {
+        alert('Der findes allerde en bruger med dette brugernavn');
       }
       else {
         App.Parse.loginError( data );
         alert('Der skete en fejl, supporten er underrettet.');
       }
     });
+  }
+
+  /**
+   * Changes the UI to act logged in and personal.
+   */
+  function _loginSuccess() {
+    dom.$form.html('Du er logget ind som: ' + data.Name);
   }
 
   ////////////////

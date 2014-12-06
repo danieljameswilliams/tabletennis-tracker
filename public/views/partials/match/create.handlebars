@@ -1,8 +1,11 @@
 <fieldset>
   <legend>Submit Match</legend>
   <form action="/api/match/create" method="POST" class="js-match-create-form">
-    <input type="text" name="challenger" placeholder="Udfordre's Brugernavn">
-    <input type="text" name="challenged" placeholder="Udfordret's Brugernavn">
+    <input type="hidden" name="challenger-id" id="challenger-id" class="js-challenger-id">
+    <input type="text" name="challenger" data-userid-field="challenger-id" class="js-challenger-input" placeholder="Udfordre's Brugernavn">
+
+    <input type="hidden" name="challenged-id" id="challenged-id" class="js-challenged-id">
+    <input type="text" name="challenged" data-userid-field="challenged-id" class="js-challenged-input" placeholder="Udfordret's Brugernavn">
 
     <button type="submit" class="js-match-create-btn">Opret kamp</button>
   </form>
